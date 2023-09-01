@@ -12,8 +12,8 @@ defaultEntryPoints = ["https","http"]
   address = ":443"
     [entryPoints.https.tls]
       [[entryPoints.https.tls.certificates]]
-      certFile = "/etc/certs/jupyter_ens_uvsq_fr.crt"
-      keyFile = "/etc/certs/jupyter.ens.uvsq.fr.key"
+      certFile = "/etc/certs/CRC_rootCA.crt"
+      keyFile = "/etc/certs/CRC_rootCA.key"
 
 [docker]
 domain = "docker.local"
