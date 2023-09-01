@@ -11,6 +11,7 @@ RUN apt-get update && \
     tzdata \
     gfortran \
     gcc \
+    python3-dev \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -20,7 +21,7 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'jupyterhub' \
     'julia' && \
-    conda clean -tipsy && \
+    conda clean -t && \
     fix-permissions $CONDA_DIR
 
 ENV CPATH=$CONDA_DIR/include
