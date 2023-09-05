@@ -11,7 +11,6 @@ services:
       - /run/podman/podman.sock:/var/run/docker.sock
       - jupyterhub_data:/srv/jupyterhub
       - /etc/slurm:/etc/slurm
-      - /usr/bin:/tmp/bin
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
       - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
