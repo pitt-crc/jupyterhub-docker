@@ -22,7 +22,7 @@ services:
   jupyterlab:
     build: jupyterlab
     image: jupyterlab_img
-    container_name: jupyterlab-throaway
+    container_name: jupyterlab-throwaway
     network_mode: none
     command: echo
 
