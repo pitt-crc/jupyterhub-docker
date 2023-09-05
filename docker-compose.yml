@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 
 services:
   jupyterhub:
@@ -6,8 +6,10 @@ services:
     image: jupyterhub_img
     container_name: jupyterhub
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /run/podman/podman.sock:/var/run/docker.sock
       - jupyterhub_data:/srv/jupyterhub
+      - /etc/slurm:/etc/slurm
+      - /usr/bin:/tmp/bin
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
       - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
@@ -15,7 +17,7 @@ services:
       - HOST
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:${HOST}"
+      - "traefik.frontend.rule=Host:hub-test.crc.pitt.edu"
     restart: on-failure
 
   jupyterlab:
@@ -26,7 +28,7 @@ services:
     command: echo
 
   reverse-proxy:
-    image: traefik
+    image: traefik:1.7.10
     container_name: reverse-proxy
     ports:
       - "80:80"
@@ -35,7 +37,7 @@ services:
     volumes:
       - ./reverse-proxy/traefik.toml:/etc/traefik/traefik.toml
       - /etc/certs:/etc/certs
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /run/podman/podman.sock:/var/run/docker.sock
     restart: on-failure
 
 volumes:

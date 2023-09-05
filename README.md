@@ -1,15 +1,14 @@
-# JupyterHub deployment in use at Université de Versailles
+# JupyterHub deployment in use at the University of Pittsburgh
 
 This is a [JupyterHub](https://jupyter.org/hub) deployment based on
-Docker currently in use at [Université de
-Versailles](https://jupyter.ens.uvsq.fr/).
+Docker currently in use at [Pitt Center for Research Computing (CRC)](https://crc.pitt.edu/).
+
+This repo is originally forked from a similar deployment at the [Université de Versailles](https://github.com/defeo/jupyterhub-docker.git)
 
 ## Features
 
-- Containerized single user Jupyter servers, using
-  [DockerSpawner](https://github.com/jupyterhub/dockerspawner);
-- Central authentication to the University CAS server;
-- User data persistence;
+- Containerized Jupyter servers, using [WrapSpawner Profiles](https://github.com/jupyterhub/wrapspawner);
+- Central authentication via PITT Auth through [Jupyter-Authenticator](https://github.com/pitt-crc/Jupyter-Authenticator);
 - HTTPS proxy.
 
 ## Learn more
@@ -17,7 +16,19 @@ Versailles](https://jupyter.ens.uvsq.fr/).
 This deployment is described in depth in [this blog
 post](https://opendreamkit.org/2018/10/17/jupyterhub-docker/).
 
-### Adapt to your needs
+### Customizations made to the original deployment to fit our JupyterHub needs at the CRC:
+
+#### Jupyterlab container customizations
+- Starting by the configuration of jupyterlab container ([Dockerfile](./jupyterlab/Dockerfile)), we used a recent docker image (jupyter/tensorflow-notebook:python-3.10) that includes Python3.10 and the commonly used packages in machine and deep learning.
+- Install linux packages that we might need for running the image such as "gfortran", "gcc", "python3-dev".
+- Add "jupyterhub" and "julia" packages to the base conda environment within the container.
+- Adding the "conda-activate.sh" script to start ahead of the notebooks.
+- You can test this container directly through running:
+"podman-compose build jupyterlab" then "podman run --rm -p 8888:8888 jupyterlab_img"
+and visit the generated tokenized link (looks like:  http://127.0.0.1:8888/?token=xyz) to test jupyterlab.
+- The activation line of conda base is added into [conda-activate.sh](./jupyterlab/conda-activate.sh)
+
+#### Jupyterhub container customizations
 
 This deployment is ready to clone and roll on your own server. Read
 the [blog
