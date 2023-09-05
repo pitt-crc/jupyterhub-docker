@@ -8,5 +8,3 @@ RUN pip install --upgrade pip && \
         batchspawner \
         crc-jupyter-auth \
         jupyterhub-idle-culler
-
-ENV PATH $PATH:/tmp/bin
