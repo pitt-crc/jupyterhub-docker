@@ -22,12 +22,11 @@ c.Authenticator.debug = True
 
 ## Authentication
 # These settings are specific to the CRC's proprietary authentication package `crc_jupyter_auth`
-c.JupyterHub.authenticator_class = 'crc_jupyter_auth.RemoteUserAuthenticator'
-c.Authenticator.required_vpn_role = 'SAM-SSLVPNSAMUsers'
-c.Authenticator.missing_user_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
-c.Authenticator.missing_role_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
-
-c.Authenticator.admin_users = {'yak73', 'leb140'}
+# c.JupyterHub.authenticator_class = 'crc_jupyter_auth.RemoteUserAuthenticator'
+# c.Authenticator.required_vpn_role = 'SAM-SSLVPNSAMUsers'
+# c.Authenticator.missing_user_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
+# c.Authenticator.missing_role_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
+# c.Authenticator.admin_users = {'yak73', 'leb140'}
 
 ## Spawner
 

@@ -1,5 +1,12 @@
 FROM jupyterhub/jupyterhub:4.0.2
 
+# Create a user for use in development
+# Remove this for production
+ENV USERNAME=test_user
+ENV PASSWORD=12345
+RUN useradd -m $USERNAME && \
+    echo "$USERNAME:$PASSWORD" | chpasswd
+
 COPY jupyterhub_config.py .
 
 RUN pip install --upgrade pip && \
