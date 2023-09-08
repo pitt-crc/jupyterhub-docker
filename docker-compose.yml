@@ -9,7 +9,7 @@ services:
       - 8000:8000
     volumes:
       - /run/podman/podman.sock:/var/run/docker.sock
-      - jupyterhub_data:/srv/jupyterhub
+      - ${PWD}/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
       - /etc/slurm:/etc/slurm
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyterlab_img

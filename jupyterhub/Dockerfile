@@ -1,13 +1,7 @@
 FROM jupyterhub/jupyterhub:4.0.2
 
-# Create a user for use in development
-# Remove this for production
-ENV USERNAME=test_user
-ENV PASSWORD=12345
-RUN useradd -m $USERNAME && \
-    echo "$USERNAME:$PASSWORD" | chpasswd
-
-COPY jupyterhub_config.py .
+# REMOVE FOR PRODUCTION - dummy user so we can login and test things
+RUN useradd -m test_user && echo "test_user:12345" | chpasswd
 
 # Install custom plugins and dependencies
 ENV PIP_ROOT_USER_ACTION=ignore
