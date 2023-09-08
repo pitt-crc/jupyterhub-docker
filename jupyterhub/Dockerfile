@@ -9,6 +9,8 @@ RUN useradd -m $USERNAME && \
 
 COPY jupyterhub_config.py .
 
+# Install custom plugins and dependencies
+ENV PIP_ROOT_USER_ACTION=ignore
 RUN pip install --upgrade pip && \
     pip install --no-input  \
         wrapspawner \
