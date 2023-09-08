@@ -9,5 +9,9 @@ RUN pip install --upgrade pip && \
     pip install --no-input  \
         wrapspawner \
         batchspawner \
+        dockerspawner \
         crc-jupyter-auth \
-        jupyterhub-idle-culler
+        jupyterhub-idle-culler \
+
+# Configure environment so containers are managed by podman instead of docker
+ENV DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock

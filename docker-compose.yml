@@ -1,29 +1,23 @@
 version: '4'
 
 services:
-  jupyterhub:
+  jupyterhub: # The primary jupyterhub server
     build: jupyterhub
     image: jupyterhub_img
     container_name: jupyterhub
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
-      - /run/podman/podman.sock:/var/run/docker.sock
+      - /var/run/podman/podman.sock:/var/run/docker.sock
       - ${PWD}/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
-      - /etc/slurm:/etc/slurm
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
-      - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
-      - HUB_IP=jupyterhub
-      - HOST
+      - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
     restart: on-failure
 
-  jupyterlab:
+  jupyterlab: # Builds the image used when spawning new user instances
     build: jupyterlab
     image: jupyterlab_img
-    container_name: jupyterlab-throwaway
-    network_mode: none
-    command: echo
 
 volumes:
   jupyterhub_data:

@@ -1,32 +1,9 @@
 FROM jupyter/tensorflow-notebook:python-3.10
 
-# The code commented out below is temporarily disabled for debugging purposes
+RUN pip3 install 'jupyterhub==4.0.2'
 
+# Run as an unprovliged user
+ENV HOME=/home/jovyan
+USER jovyan
 
-# LABEL maintainer="Yassin Khalifa"
-#
-# USER root
-#
-# # APT packages
-# RUN apt-get update && \
-#     apt-get install -y --no-install-recommends \
-#     fonts-dejavu \
-#     tzdata \
-#     gfortran \
-#     gcc \
-#     python3-dev \
-#     && apt-get clean && \
-#     rm -rf /var/lib/apt/lists/*
-#
-# USER $NB_UID
-#
-# # Conda packages
-# RUN conda install --quiet --yes jupyterhub julia && \
-#     conda clean -t && \
-#     fix-permissions $CONDA_DIR
-#
-# ENV CPATH=$CONDA_DIR/include
-#
-# # Add conda env hook
-# COPY ./conda-activate.sh /usr/local/bin/before-notebook.d/
-#
+CMD ["jupyterhub-singleuser"]
