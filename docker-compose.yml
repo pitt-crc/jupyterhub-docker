@@ -13,6 +13,7 @@ services:
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
       - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
+      - DOCKER_NETWORK_NAME=jupyterhub-docker_default
     restart: on-failure
 
   jupyterlab: # Builds the image used when spawning new user instances
