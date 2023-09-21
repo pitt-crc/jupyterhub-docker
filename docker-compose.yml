@@ -13,12 +13,20 @@ services:
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyter/tensorflow-notebook:hub-4.0.2
       - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
-      - DOCKER_NETWORK_NAME=jupyterhub-docker_default
+      - DOCKER_NETWORK_NAME=jupyterhub_network
     restart: on-failure
+    networks:
+      - jupyterhub_network
 
   jupyterlab: # Builds the image used when spawning new user instances
     image: jupyter/tensorflow-notebook:hub-4.0.2
     container_name: jupyterlab_img
+    networks:
+      - jupyterhub_network
 
 volumes:
   jupyterhub_data:
+
+networks:
+  jupyterhub_network:
+    name: jupyterhub_network
