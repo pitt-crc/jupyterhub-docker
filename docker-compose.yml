@@ -11,14 +11,14 @@ services:
       - /run/user/1000/podman/podman.sock:/var/run/docker.sock
       - ${PWD}/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
     environment:
-      - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
+      - DOCKER_JUPYTER_CONTAINER=jupyter/tensorflow-notebook:hub-4.0.2
       - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
       - DOCKER_NETWORK_NAME=jupyterhub-docker_default
     restart: on-failure
 
   jupyterlab: # Builds the image used when spawning new user instances
-    build: jupyterlab
-    image: jupyterlab_img
+    image: jupyter/tensorflow-notebook:hub-4.0.2
+    container_name: jupyterlab_img
 
 volumes:
   jupyterhub_data:
