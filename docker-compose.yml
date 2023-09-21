@@ -10,6 +10,7 @@ services:
     volumes:
       - /run/user/1000/podman/podman.sock:/var/run/docker.sock
       - ${PWD}/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
+      - jupyterhub_data:/srv/jupyterhub
     environment:
       - DOCKER_JUPYTER_CONTAINER=jupyter/tensorflow-notebook:hub-4.0.2
       - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
