@@ -1,42 +1,34 @@
-version: '3'
+version: '4'
 
 services:
-  jupyterhub:
+  jupyterhub: # The primary jupyterhub server
     build: jupyterhub
     image: jupyterhub_img
     container_name: jupyterhub
+    ports:
+      - "8000:8000"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /run/user/1000/podman/podman.sock:/var/run/docker.sock
+      - ${PWD}/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
       - jupyterhub_data:/srv/jupyterhub
     environment:
-      - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
-      - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
+      - DOCKER_JUPYTER_CONTAINER=jupyter/tensorflow-notebook:hub-4.0.2
+      - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
+      - DOCKER_NETWORK_NAME=jupyterhub_network
       - HUB_IP=jupyterhub
-      - HOST
-    labels:
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:${HOST}"
     restart: on-failure
+    networks:
+      - jupyterhub_network
 
-  jupyterlab:
-    build: jupyterlab
-    image: jupyterlab_img
-    container_name: jupyterlab-throaway
-    network_mode: none
-    command: echo
-
-  reverse-proxy:
-    image: traefik
-    container_name: reverse-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - ./reverse-proxy/traefik.toml:/etc/traefik/traefik.toml
-      - /etc/certs:/etc/certs
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: on-failure
+  jupyterlab: # Builds the image used when spawning new user instances
+    image: jupyter/tensorflow-notebook:hub-4.0.2
+    container_name: jupyterlab_img
+    networks:
+      - jupyterhub_network
 
 volumes:
   jupyterhub_data:
+
+networks:
+  jupyterhub_network:
+    name: jupyterhub_network
