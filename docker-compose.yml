@@ -15,6 +15,7 @@ services:
       - DOCKER_JUPYTER_CONTAINER=jupyter/tensorflow-notebook:hub-4.0.2
       - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
       - DOCKER_NETWORK_NAME=jupyterhub_network
+      - HUB_IP=jupyterhub
     restart: on-failure
     networks:
       - jupyterhub_network
