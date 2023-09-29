@@ -1,30 +1,13 @@
-FROM jupyter/tensorflow-notebook:python-3.10
-
-LABEL maintainer="Yassin Khalifa"
-
-USER root
-
-# APT packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    fonts-dejavu \
-    tzdata \
-    gfortran \
-    gcc \
-    python3-dev \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+FROM jupyter/tensorflow-notebook:latest
 
 USER $NB_UID
 
 # Conda packages
 RUN conda install --quiet --yes \
-    'jupyterhub' \
-    'julia' && \
+    'nb_conda_kernels' && \
     conda clean -t && \
     fix-permissions $CONDA_DIR
 
-ENV CPATH=$CONDA_DIR/include
+COPY ./jupyter_config.json /home/jovyan/.jupyter/jupyter_config.json
 
-# Add conda env hook
-COPY ./conda-activate.sh /usr/local/bin/before-notebook.d/
+ENV CPATH=$CONDA_DIR/include
