@@ -1,4 +1,5 @@
 # JupyterHub deployment in use at the University of Pittsburgh
+[![](https://app.codacy.com/project/badge/Grade/26d5cf546348400c86d2de343e623e70)](https://app.codacy.com/gh/pitt-crc/jupyterhub-docker/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 This is a [JupyterHub](https://jupyter.org/hub) deployment based on
 Docker currently in use at [Pitt Center for Research Computing (CRC)](https://crc.pitt.edu/).
