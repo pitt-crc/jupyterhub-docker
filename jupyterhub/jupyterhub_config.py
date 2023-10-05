@@ -9,7 +9,6 @@ c = get_config()
 c.JupyterHub.admin_access = True
 c.JupyterHub.hub_ip = os.environ['HUB_IP']
 
-
 # Authentication
 # These settings are specific to the CRC's proprietary authentication package `crc_jupyter_auth`
 c.JupyterHub.authenticator_class = 'crc_jupyter_auth.RemoteUserAuthenticator'
@@ -25,7 +24,7 @@ c.Spawner.cpu_limit = 1
 c.Spawner.mem_limit = '4G'
 
 # Docker spawner
-# Common convention is to mount mounting user home directories under /home/jovyan/work
+# Common convention is to mount user home directories under /home/jovyan/work
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 c.DockerSpawner.image = os.environ['DOCKER_JUPYTER_CONTAINER']
 c.DockerSpawner.notebook_dir = '/home/jovyan/work'
