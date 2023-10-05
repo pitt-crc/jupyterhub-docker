@@ -1,4 +1,4 @@
-# JupyterHub configuration
+"""JupyterHub configuration settings"""
 
 import os
 import sys
