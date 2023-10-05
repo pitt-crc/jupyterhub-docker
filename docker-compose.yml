@@ -12,7 +12,7 @@ services:
       - ${PWD}/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
       - jupyterhub_data:/srv/jupyterhub
     environment:
-      - DOCKER_JUPYTER_CONTAINER=jupyter/tensorflow-notebook:hub-4.0.2
+      - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
       - DOCKER_NOTEBOOK_DIR=/home/spawned/notebooks
       - DOCKER_NETWORK_NAME=jupyterhub_network
       - HUB_IP=jupyterhub
@@ -20,9 +20,10 @@ services:
     networks:
       - jupyterhub_network
 
-  jupyterlab: # Builds the image used when spawning new user instances
-    image: jupyter/tensorflow-notebook:hub-4.0.2
-    container_name: jupyterlab_img
+  jupyterlab:
+    build: jupyterlab
+    image: jupyterlab_img
+    container_name: jupyterlab-throaway
     networks:
       - jupyterhub_network
 
