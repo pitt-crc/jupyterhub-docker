@@ -2,7 +2,6 @@
 
 import os
 import sys
-import crc_jupyter_auth
 
 c = get_config()
 
@@ -10,20 +9,20 @@ c = get_config()
 c.JupyterHub.admin_access = True
 c.JupyterHub.hub_ip = os.environ['HUB_IP']
 
+
 # Authentication
 # These settings are specific to the CRC's proprietary authentication package `crc_jupyter_auth`
 c.JupyterHub.authenticator_class = 'crc_jupyter_auth.RemoteUserAuthenticator'
 c.Authenticator.required_vpn_role = 'SAM-SSLVPNSAMUsers'
 c.Authenticator.missing_user_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
 c.Authenticator.missing_role_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
-c.Authenticator.admin_users = {'yak73', 'leb140'}
-c.Authenticator.debug = True
+c.Authenticator.admin_users = {'djp81', 'yak73', 'leb140'}
 
 ## Spawners
 c.Spawner.default_url = '/lab'
 c.Spawner.debug = True
 c.Spawner.cpu_limit = 1
-c.Spawner.mem_limit = '1G'
+c.Spawner.mem_limit = '4G'
 
 # Docker spawner
 # Common convention is to mount mounting user home directories under /home/jovyan/work
