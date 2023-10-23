@@ -132,11 +132,18 @@ and visit the generated tokenized link (looks like:  http://127.0.0.1:8888/?toke
 
 ## Run!
 
-Once you are ready, build and launch the application with
+Once you are ready, build and launch the application from the ```jupyterhub_service``` account:
+
+1. First to switch from root to ```jupyterhub_service``` account:
+```
+  machinectl shell --uid=jupyterhub_service
+```
+
+2. Then to build and launch the application:
 
 ```
-docker-compose build
-docker-compose up -d
+  docker-compose build
+  docker-compose up -d
 ```
 
 Read the [Docker Compose manual](https://docs.docker.com/compose/) to
