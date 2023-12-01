@@ -8,8 +8,8 @@ This repo is originally forked from a similar deployment at the [Université de 
 
 ## Features
 
-- Containerized Jupyter servers, using [WrapSpawner Profiles](https://github.com/jupyterhub/wrapspawner);
-- Central authentication via PITT Auth through [Jupyter-Authenticator](https://github.com/pitt-crc/Jupyter-Authenticator);
+- Containerized Jupyter servers, using [DockerSpawner](https://github.com/jupyterhub/dockerspawner);
+- Central authentication via LDAP Authenticator [LDAP-Authenticator](https://github.com/jupyterhub/ldapauthenticator);
 - HTTPS proxy.
 
 ## Learn more
@@ -59,10 +59,11 @@ and visit the generated tokenized link (looks like:  http://127.0.0.1:8888/?toke
   
   - Add authenticator configuration:
   ```
-    c.JupyterHub.authenticator_class = 'crc_jupyter_auth.RemoteUserAuthenticator'
-    c.Authenticator.required_vpn_role = 'SAM-SSLVPNSAMUsers'
-    c.Authenticator.missing_user_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
-    c.Authenticator.missing_role_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
+    c.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
+    c.LDAPAuthenticator.server_address = os.environ['LDAP_SERVER']
+    c.LDAPAuthenticator.bind_dn_template = [
+        "cn={username},ou=person,ou=people,dc=frank,dc=sam,dc=pitt,dc=edu"
+    ]
   ```
   
   - Add the docker spawner configuration:
