@@ -17,6 +17,7 @@ services:
       - DOCKER_NETWORK_NAME=jupyterhub_network
       - HUB_IP=jupyterhub
       - LDAP_SERVER=ldap://sam-ldap-prod-01.cssd.pitt.edu
+      - LDAP_BIND_DN_TEMPLATE=cn={username},ou=person,ou=people,dc=frank,dc=sam,dc=pitt,dc=edu
     restart: on-failure
     networks:
       - jupyterhub_network

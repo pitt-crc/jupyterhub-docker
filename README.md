@@ -20,7 +20,7 @@ post](https://opendreamkit.org/2018/10/17/jupyterhub-docker/).
 ## Customizations made to the original deployment to fit our JupyterHub needs at the CRC:
 
 ### Jupyterlab container customizations
-- Starting by the configuration of jupyterlab container ([Dockerfile](./jupyterlab/Dockerfile)), we used a recent docker image (jupyter/tensorflow-notebook:python-3.10) that includes Python3.10 and the commonly used packages in machine and deep learning.
+- Starting by the configuration of jupyterlab container ([Dockerfile](./jupyterlab/Dockerfile)), we used a recent docker image (jupyter/tensorflow-notebook:python-3.11.5) that includes Python3.10 and the commonly used packages in machine and deep learning.
 - Install linux packages that might be need for running the image (via ```apt install```).
 - Install python packages that might be need for running the image including ([nb_conda_kernels](https://github.com/Anaconda-Platform/nb_conda_kernels)) which is used to manage kernels for JupyterLab/Jupyter Notebook. 
 - Prepare a configuration file for jupyter named "jupyter_config.json" with following contents:
@@ -62,7 +62,7 @@ and visit the generated tokenized link (looks like:  http://127.0.0.1:8888/?toke
     c.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
     c.LDAPAuthenticator.server_address = os.environ['LDAP_SERVER']
     c.LDAPAuthenticator.bind_dn_template = [
-        "cn={username},ou=person,ou=people,dc=frank,dc=sam,dc=pitt,dc=edu"
+        os.environ['LDAP_BIND_DN_TEMPLATE']
     ]
   ```
   
@@ -118,6 +118,8 @@ and visit the generated tokenized link (looks like:  http://127.0.0.1:8888/?toke
       - DOCKER_NETWORK_NAME is the name of the Docker network used by the services; normally, this network gets an automatic name from Docker Compose, but the Hub needs to know this name to connect the single-user servers to it.
       - DOCKER_NOTEBOOK_DIR is the directory inside the single-user server containers where the user's home directory will be mounted.
       - HUB_IP is the IP address of the Hub service within the docker network. By using the container_name Compose directive, we can set an alias for the IP, and use the same for HUB_IP.
+      - LDAP_SERVER is the IP address of the LDAP server needed for the LDAP authentication.
+      - LDAP_BIND_DN_TEMPLATE is the LDAP bind DN template needed for the LDAP authentication.
     - Set the restart policy to always, so that the Hub container will be restarted automatically if it crashes.
     - Set the network name to the same name as the one used in the Hub configuration env variable above.
   - JupyterLab configuration:

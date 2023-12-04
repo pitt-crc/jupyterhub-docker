@@ -14,7 +14,7 @@ c.JupyterHub.hub_ip = os.environ['HUB_IP']
 c.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
 c.LDAPAuthenticator.server_address = os.environ['LDAP_SERVER']
 c.LDAPAuthenticator.bind_dn_template = [
-    "cn={username},ou=person,ou=people,dc=frank,dc=sam,dc=pitt,dc=edu"
+    os.environ['LDAP_BIND_DN_TEMPLATE']
 ]
 c.Authenticator.admin_users = {'djp81', 'yak73', 'leb140'}
 
