@@ -20,6 +20,14 @@ jobs:
             image-name: ghcr.io/${{ github.repository_owner }}/crc-jupyterlab
 
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Get version
+        run: |
+          release_tag=${{ github.ref }}
+          echo "version=${release_tag#refs/tags/v}" >> $GITHUB_OUTPUT
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -35,5 +43,4 @@ jobs:
         with:
           context: ${{ matrix.image-dir }}
           push: true
-          tags: ${{ matrix.image-name }}:latest
-          build-args: SLURM_VERSION=${{ matrix.slurm-version }}
+          tags: ${{ matrix.image-name }}:${{ steps.version.outputs.version }}, ${{ matrix.image-name }}:latest
