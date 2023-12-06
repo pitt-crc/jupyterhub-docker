@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get version
+        id: get-version
         run: |
           release_tag=${{ github.ref }}
           echo "version=${release_tag#refs/tags/v}" >> $GITHUB_OUTPUT
@@ -43,4 +44,4 @@ jobs:
         with:
           context: ${{ matrix.image-dir }}
           push: true
-          tags: ${{ matrix.image-name }}:${{ steps.version.outputs.version }}, ${{ matrix.image-name }}:latest
+          tags: ${{ matrix.image-name }}:${{ steps.get-version.outputs.version }}, ${{ matrix.image-name }}:latest
