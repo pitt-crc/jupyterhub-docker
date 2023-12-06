@@ -10,12 +10,12 @@ c.JupyterHub.admin_access = True
 c.JupyterHub.hub_ip = os.environ['HUB_IP']
 
 # Authentication
-# These settings are specific to the CRC's proprietary authentication package `crc_jupyter_auth`
-c.JupyterHub.authenticator_class = 'crc_jupyter_auth.RemoteUserAuthenticator'
-c.Authenticator.required_vpn_role = 'SAM-SSLVPNSAMUsers'
-c.JupyterHub.username_header = 'cn'
-c.Authenticator.missing_user_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
-c.Authenticator.missing_role_redirect = 'https://crc.pitt.edu/Access-CRC-Web-Portals'
+# These settings are specific to the LDAP Authenticator
+c.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
+c.LDAPAuthenticator.server_address = os.environ['LDAP_SERVER']
+c.LDAPAuthenticator.bind_dn_template = [
+    os.environ['LDAP_BIND_DN_TEMPLATE']
+]
 c.Authenticator.admin_users = {'djp81', 'yak73', 'leb140'}
 
 ## Spawners
